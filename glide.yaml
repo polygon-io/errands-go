@@ -1,0 +1,6 @@
+package: github.com/polygon-io/errands-go
+import:
+- package: github.com/polygon-io/errands-server
+  version: ^1.0.2
+  subpackages:
+  - schemas
