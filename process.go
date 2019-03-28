@@ -57,7 +57,9 @@ func ( p *Processor ) requestErrandToProcess(){
 		fmt.Println("Error requesting errand to process:", err)
 		return
 	}
-	p.ErrandQueue <- &errandRes.Results
+	if errandRes.Results.ID != "" {
+		p.ErrandQueue <- &errandRes.Results
+	}
 }
 
 
