@@ -66,7 +66,7 @@ func ( p *Processor ) requestErrandToProcess(){
 func ( p *Processor ) Run(){
 	ticker := time.NewTicker( 4 * time.Second )
 	// Create the actually processor threads:
-	for i := 0; i < p.Concurrency; i++ {
+	for i := 1; i <= p.Concurrency; i++ {
 		obj := p.NewProcThread()
 		p.Procs = append( p.Procs, obj )
 		go obj.RunThread()
