@@ -11,39 +11,39 @@ const (
 	ContextRequestID = "request-id"
 )
 
-// ErrandContext implements api_context.Context for Errands.
-type ErrandContext struct {
+// Context implements api_context.Context for Errands.
+type Context struct {
 	context.Context
 
 	ID     string
 	logger *log.Entry
 }
 
-func NewErrandContext(parentCtx context.Context, errandID string) *ErrandContext {
-	return &ErrandContext{
+func NewContext(parentCtx context.Context, errandID string) *Context {
+	return &Context{
 		Context: parentCtx,
 		ID:      errandID,
 		logger:  log.WithField("errand_id", errandID),
 	}
 }
 
-func (c *ErrandContext) RequestID() string {
+func (c *Context) RequestID() string {
 	return c.ID
 }
 
-func (c *ErrandContext) Logger() *log.Entry {
+func (c *Context) Logger() *log.Entry {
 	return c.logger
 }
 
-func (c *ErrandContext) AddFieldsToLogger(fields log.Fields) {
+func (c *Context) AddFieldsToLogger(fields log.Fields) {
 	c.logger = c.logger.WithFields(fields)
 }
 
-func (c *ErrandContext) AddFieldToLogger(key string, value interface{}) {
+func (c *Context) AddFieldToLogger(key string, value interface{}) {
 	c.logger = c.logger.WithField(key, value)
 }
 
-func (c *ErrandContext) Value(key interface{}) interface{} {
+func (c *Context) Value(key interface{}) interface{} {
 	switch key {
 	case ContextLogger:
 		return c.Logger()
