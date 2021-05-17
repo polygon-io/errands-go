@@ -5,3 +5,4 @@ COPY . /src/
 RUN cd cmd/echo && go build -o /bin/echo-errand
 
 ENTRYPOINT ["/bin/echo-errand"]
+
