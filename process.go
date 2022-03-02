@@ -118,13 +118,14 @@ func (proc *ProcThread) RunThread() {
 		select {
 		case job := <-proc.Processor.ErrandQueue:
 			proc.AwaitingErrand = false
+			fmt.Println("Start processing:", job.ID)
 			// Actually Processing the job:
 			res, err := proc.Processor.Fn(job)
 			if err != nil {
 				fmt.Println("Error processing:", job.ID, "Err:", err)
 				proc.Processor.Parent.FailErrand(job.ID, err.Error())
 			} else {
-				fmt.Println("Completed Processing:", job.ID)
+				fmt.Println("Completed processing:", job.ID)
 				proc.Processor.Parent.CompleteErrand(job.ID, res)
 			}
 			proc.AwaitingErrand = true
