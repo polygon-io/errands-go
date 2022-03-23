@@ -2,6 +2,7 @@ package errands
 
 import (
 	"bytes"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 
@@ -33,6 +34,17 @@ type ErrandResponse struct {
 
 func (e *ErrandsAPI) GetErrands() (*ErrandsResponse, error) {
 	res, err := e.get("/v1/errands/")
+	if err != nil {
+		return &ErrandsResponse{}, err
+	}
+	return parseErrandsResponse(res)
+}
+
+// ListErrands queries the errands API for a list of errands that match the given query.
+// Possible options for key are: status and type.
+func (e *ErrandsAPI) ListErrands(key, val string) (*ErrandsResponse, error) {
+	path := fmt.Sprintf("/v1/errands/list/%s/%s", key, val)
+	res, err := e.get(path)
 	if err != nil {
 		return &ErrandsResponse{}, err
 	}
